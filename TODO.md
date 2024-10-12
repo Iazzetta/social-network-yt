@@ -1,0 +1,4 @@
+- subir no github
+- frontend
+- subir no vps/cloud o projeto backend
+- conectar banco de dados postgres
