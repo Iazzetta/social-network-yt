@@ -6,4 +6,6 @@ COPY . .
 
 RUN poetry install
 
+EXPOSE 80
+
 ENTRYPOINT ["poetry", "run", "task", "prod"]
