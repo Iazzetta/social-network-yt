@@ -17,7 +17,7 @@ taskipy = "^1.13.0"
 
 [tool.taskipy.tasks]
 dev = "fastapi dev dev.py"
-prod = "uvicorn src.api.application:app --host 0.0.0.0 --port 8000 --reload"
+prod = "uvicorn src.api.application:app --host 0.0.0.0 --port 80 --reload"
 
 [build-system]
 requires = ["poetry-core"]
