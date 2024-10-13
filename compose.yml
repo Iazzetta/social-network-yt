@@ -1,0 +1,5 @@
+services:
+  socialnetwork_api:
+    build: .
+    ports:
+      - "80:80"
