@@ -38,3 +38,6 @@ class UserService:
 
     async def get_all_users(self):
         return await UserModel.all()
+
+    async def get_mini_user(self, user_id: int):
+        return await UserModel.get(id=user_id).values('id', 'name')

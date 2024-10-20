@@ -15,7 +15,7 @@ class PostService:
         return new_post
 
     async def get_all_posts(self):
-        return await PostModel.all()
+        return await PostModel.all().order_by('-created_at')
         
     async def get_user_posts(self, user_id: int):
         return await PostModel.filter(user_id=user_id)
