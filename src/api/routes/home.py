@@ -11,3 +11,8 @@ router = APIRouter(
 @login_required
 async def informations(request: Request):
     return {'user': request.current_user}
+
+@router.get("/test")
+@login_required
+async def test_home(request: Request):
+    return {'user': request.current_user}
