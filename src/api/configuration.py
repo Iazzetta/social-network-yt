@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.routes import users
@@ -10,6 +10,7 @@ ALLOWED_HOSTS = [
 ]
 
 def configure_routes(app: FastAPI):
+    home_show(app)
     app.include_router(users.router)
     app.include_router(home.router)
     app.include_router(post.router)
@@ -45,3 +46,12 @@ def configure_middlewares(app):
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+def home_show(app):
+    from fastapi.templating import Jinja2Templates
+    templates = Jinja2Templates(directory="templates")
+    @app.get('/')
+    async def home_show(request: Request):
+        return templates.TemplateResponse(
+            request=request, name="index.html"
+        )
