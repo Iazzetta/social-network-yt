@@ -1,1 +1,0 @@
-aws lightsail push-container-image --profile obscurenetwork --region us-east-1 --service-name socialnetworkpy --label socialnetworkpy --image socialnetworkpy:latest
