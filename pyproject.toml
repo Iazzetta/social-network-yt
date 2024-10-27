@@ -10,6 +10,7 @@ packages = [{include = "src"}]
 python = "^3.9"
 fastapi = {extras = ["standard"], version = "^0.115.0"}
 tortoise-orm = {extras = ["asyncpg"], version = "^0.21.6"}
+pydantic-settings = "^2.6.0"
 
 
 [tool.poetry.group.dev.dependencies]

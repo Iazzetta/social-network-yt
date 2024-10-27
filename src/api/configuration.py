@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from tortoise.contrib.fastapi import register_tortoise
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from src.api.routes import users
 from src.api.routes import home
 from src.api.routes import post
@@ -8,6 +9,16 @@ from src.api.routes import post
 ALLOWED_HOSTS = [
     "http://127.0.0.1:5500",
 ]
+
+class Settings(BaseSettings):
+    DATABASE_URL: str
+
+    model_config = SettingsConfigDict(
+        env_file=('.env.prod', '.env'),
+        env_file_encoding='utf-8'
+    )
+
+app_settings = Settings()
 
 def configure_routes(app: FastAPI):
     home_show(app)
@@ -21,7 +32,7 @@ def configure_db(app: FastAPI):
         config={
             'connections': {
                 # 'default': 'postgres://postgres:qwerty123@localhost:5432/events'
-                'default': 'sqlite://db.sqlite3'
+                'default': app_settings.DATABASE_URL
             },
             'apps': {
                 'models': {
