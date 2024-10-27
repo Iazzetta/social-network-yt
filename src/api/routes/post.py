@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, Request
-from src.api.dtos.posts import PostCreation
+from src.api.dtos.posts import PostCreation, CommentCreation
 from src.services.post import PostService
 from src.api.authentication import login_required
 
@@ -41,6 +41,27 @@ async def like_post(
 ):
     response = await service.like_post(request.current_user.id, post_id)
     return {"like_post": response}
+
+@router.post('/{post_id}/comment')
+@login_required
+async def comment_post(
+    request: Request,
+    post_id: int, 
+    body: CommentCreation,
+    service: Annotated[PostService, Depends(PostService)]
+):
+    response = await service.comment_post(request.current_user.id, post_id, body.message)
+    return {"comment": response}
+
+
+@router.get('/{post_id}/comments')
+async def get_post_comments(
+    post_id: int, 
+    service: Annotated[PostService, Depends(PostService)]
+):
+    response = await service.get_post_comments(post_id)
+    return {"comments": response}
+
 
 @router.get('/{user_id}')
 async def get_user_posts(

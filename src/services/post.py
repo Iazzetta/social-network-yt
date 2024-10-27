@@ -1,5 +1,5 @@
 from src.datalayer.models.user import UserModel
-from src.datalayer.models.post import PostModel, PostLikeModel
+from src.datalayer.models.post import PostModel, PostLikeModel, PostCommentModel
 from tortoise.exceptions import DoesNotExist
 class PostService:
 
@@ -36,6 +36,24 @@ class PostService:
             await post.save()
 
         return post.likes_count
+
+    async def comment_post(self, user_id: int, post_id: int, message: str):
+
+        post = await PostModel.get(id = post_id)
+
+        comment = await PostCommentModel.create(
+            user_id = user_id,
+            post_id = post_id,
+            message = message
+        )
+
+        post.comments_count += 1
+        await post.save()
+
+        return comment
+
+    async def get_post_comments(self, post_id: int):
+        return await PostCommentModel.filter(post_id = post_id).order_by('-created_at')
 
     async def get_all_posts(self):
         return await PostModel.all().order_by('-created_at')

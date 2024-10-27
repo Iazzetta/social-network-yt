@@ -1,10 +1,23 @@
 import httpx
 
-token = "vjw4jETwGlwojtyq5jrtv7JwMcs"
-
 ENDPOINT_API = "http://localhost:8000"
 
-def create_post():
+def create_user():
+    data = {
+        "name": "outro usuario comentando",
+        "email": "zdzdzdzd@teste.com",
+        "password": "123456789"
+    }
+
+    r = httpx.post(f'{ENDPOINT_API}/users/register', json=data)
+
+    response = r.json()
+
+    new_user = response['created']
+
+    return new_user['token']
+
+def create_post(token):
     r = httpx.post(f'{ENDPOINT_API}/posts/create', headers={
         'Authorization': token,
         'Content-Type': 'application/json'
@@ -12,11 +25,11 @@ def create_post():
         'message': 'Olá mundo!'
     })
     response = r.json()
+    new_post = response['post']
 
-    print(r.status_code)
-    print('create_post', response)
+    return new_post['id']
 
-def like_post(post_id):
+def like_post(token, post_id):
 
     r = httpx.post(f'{ENDPOINT_API}/posts/{post_id}/like', headers={
         'Authorization': token,
@@ -24,9 +37,36 @@ def like_post(post_id):
     })
     response = r.json()
 
-    print(r.status_code)
-    print('like_post', response)
+    return response
+
+def comment_post(token, post_id):
+
+    message = 'test comentario'
+
+    r = httpx.post(f'{ENDPOINT_API}/posts/{post_id}/comment', headers={
+        'Authorization': token,
+        'Content-Type': 'application/json'
+    }, json={
+        'message': message
+    })
+    response = r.json()
+
+    print(response)
+
+    return response
 
 
-# create_post()
-# like_post(1)
+# TESTES
+
+token = create_user()
+
+post_id = create_post(token)
+print('new post', post_id)
+
+like = like_post(token, post_id)
+print('like', like)
+
+deslike = like_post(token, post_id)
+print('deslike', deslike)
+
+comment_post(token, post_id)
