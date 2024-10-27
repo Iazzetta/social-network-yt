@@ -19,7 +19,7 @@ async def register(body: UserRegistration, service: Annotated[UserService, Depen
         password=body.password
     )
 
-    return {'created': response}
+    return {'token': response}
 
 @router.post("/login")
 async def login(
@@ -32,7 +32,7 @@ async def login(
         password=body.password
     )
 
-    return {'logged': response}
+    return {'token': response}
 
 @router.get('/all-users')
 async def get_all_users(service: Annotated[UserService, Depends(UserService)]):

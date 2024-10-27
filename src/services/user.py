@@ -21,7 +21,7 @@ class UserService:
             password = password
         )
 
-        return user
+        return user.token
 
     async def login(self, email: str, password: str):
         user = None
@@ -34,7 +34,7 @@ class UserService:
         if user.password != password:
             raise login_wrong_exception()
 
-        return user
+        return user.token
 
     async def get_all_users(self):
         return await UserModel.all()
