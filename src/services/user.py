@@ -28,7 +28,6 @@ class UserService:
         try:
             user = await UserModel.get(email=email)
         except Exception as e:
-            print('fail', e)
             raise login_wrong_exception()
 
         if user.password != password:
@@ -37,7 +36,7 @@ class UserService:
         return user.token
 
     async def get_all_users(self):
-        return await UserModel.all()
+        return await UserModel.all().values('id', 'name')
 
     async def get_mini_user(self, user_id: int):
         return await UserModel.get(id=user_id).values('id', 'name')
