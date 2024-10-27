@@ -5,7 +5,7 @@ from src.datalayer.models.base import ModelBase
 
 
 def generate_token():
-    return secrets.token_urlsafe(20)
+    return secrets.token_urlsafe(50)
 
 class UserModel(ModelBase):
     name = fields.CharField(max_length=240)
