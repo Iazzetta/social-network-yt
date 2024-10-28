@@ -7,7 +7,8 @@ from src.api.routes import home
 from src.api.routes import post
 
 ALLOWED_HOSTS = [
-    "http://127.0.0.1:5500",
+    "https://social-network-front-production-f940.up.railway.app",
+    "http://localhost:5000", # dev front
 ]
 
 class Settings(BaseSettings):
