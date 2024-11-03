@@ -1,6 +1,8 @@
 from src.datalayer.models.user import UserModel
 from src.datalayer.models.post import PostModel, PostLikeModel, PostCommentModel
 from tortoise.exceptions import DoesNotExist
+from src.api.exceptions.post import post_notfound
+
 class PostService:
 
     def __init__(self):
@@ -13,6 +15,12 @@ class PostService:
             message = message,
         )
         return new_post
+
+    async def get_post(self, post_id: int):
+        try:
+            return await PostModel.get(id=post_id)
+        except DoesNotExist as e:
+            raise post_notfound()
 
     async def like_post(self, user_id: int, post_id: int):
         post = await PostModel.get(id = post_id)

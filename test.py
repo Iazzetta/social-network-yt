@@ -5,7 +5,7 @@ ENDPOINT_API = "http://localhost:8000"
 def create_user():
     data = {
         "name": "outro usuario comentando",
-        "email": "zdzdzdzd@teste.com",
+        "email": "fduysgfuydgfuds@teste.com",
         "password": "123456789"
     }
 
@@ -13,9 +13,7 @@ def create_user():
 
     response = r.json()
 
-    new_user = response['created']
-
-    return new_user['token']
+    return response['token']
 
 def create_post(token):
     r = httpx.post(f'{ENDPOINT_API}/posts/create', headers={
@@ -70,3 +68,5 @@ deslike = like_post(token, post_id)
 print('deslike', deslike)
 
 comment_post(token, post_id)
+
+print('ID DO POST COM COMENTARIO', post_id)

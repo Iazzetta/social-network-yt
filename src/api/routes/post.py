@@ -32,6 +32,16 @@ async def get_posts(service: Annotated[PostService, Depends(PostService)]):
     return {"posts": response}
 
 
+@router.get('/{post_id}')
+async def get_post(post_id: int, service: Annotated[PostService, Depends(PostService)]):
+    post = await service.get_post(post_id)
+    comments = await service.get_post_comments(post_id)
+    return {
+        "post": post,
+        "comments": comments,
+    }
+
+
 @router.post('/{post_id}/like')
 @login_required
 async def like_post(
